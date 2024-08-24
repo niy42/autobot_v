@@ -130,28 +130,28 @@ CREATE TABLE autobots (
 ```
 This statement creates a table named autobots with fields for ID, name, username, email, and timestamps for record creation and updates.
 
-```sql
+```bash
 
 ### Frontend Setup
 
-1. **Navigate to the frontend directory:**
+1. Navigate to the frontend directory:
 
-    ```bash
+
     cd client
-    ```
+    
 
-2. **Install the dependencies:**
+2. Install the dependencies:
 
-    ```bash
+    
     npm install
-    ```
+    
 
 3. **Start the frontend development server:**
     Start the server by running:
 
-    ```bash
+
     npm run dev
-    ```
+    
 
     Open your browser and go to http://localhost:5173 to view the application.
     
