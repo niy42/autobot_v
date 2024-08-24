@@ -34,37 +34,37 @@ Before setting up the project, ensure you have the following installed:
 git clone https://github.com/niy42/autobots_v.git
 cd autobots_v
 
-```sql
+```bash
 ### Backend Setup
 
-1. **Navigate to the backend directory:**
+1. Navigate to the backend directory:
 
-    ```bash
+    
     cd backend
-    ```
+    
 
-2. **Install the dependencies:**
+2. Install the dependencies:
 
-    ```bash
+
     npm install
-    ```
+   
 
-3. **Run database migrations and seeders:**
+3. Run database migrations and seeders:
 
     Run the following commands to migrate the database and seed initial data:
 
-    ```bash
+    
     npx sequelize db:migrate
     npx sequelize db:seed:all
-    ```
+ 
 
-4. **Start the backend server:**
+4. Start the backend server:
 
     Start the server by running:
 
-    ```sql
+   
     npm run dev
-    ```
+ 
 ```
 ## **Creating the `autobots` Database in MySQL**
 
@@ -146,12 +146,12 @@ This statement creates a table named autobots with fields for ID, name, username
     npm install
     
 
-3. **Start the frontend development server:**
+3. Start the frontend development server:
     Start the server by running:
 
 
     npm run dev
-    
+
 
     Open your browser and go to http://localhost:5173 to view the application.
     
