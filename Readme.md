@@ -114,14 +114,14 @@ You can find the config.json file located in the config folder to interact with 
 ```
 This config.json file allows your application to establish a seamless connection to the autobots database, facilitating interactions such as querying, updating, and managing data.
 
-#### 3. Verify Connection
+### 3. Verify Connection
 After configuring the config.json file, ensure your application is able to connect to the autobots database. This typically involves loading the configuration settings and using them to establish a connection through your application’s database library or ORM.
 
 ### 4. Set Up Tables
 
 After connecting to the `autobots` database, you can define and create the necessary tables using Sequelize, an ORM for Node.js. Below is an example of how to define and create a table for storing autobot information:
 
-1. **Define the Autobot Model**: In the application, a Sequelize model similar to the below is created for the `autobots` table.
+1. **Define the Autobot Model**: In the application, a Sequelize model similar to the below is already created for the `autobots` table.
 
     ```javascript
     const { Sequelize, DataTypes } = require('sequelize');
@@ -173,8 +173,6 @@ After connecting to the `autobots` database, you can define and create the neces
 
 By following these steps, you'll have a fully set up `autobots` table in your MySQL database using Sequelize, and your application will be able to interact with it seamlessly.
 
-This statement creates a table named autobots with fields for ID, name, username, email, and timestamps for record creation and updates.
-
 ```bash
 
 ### Frontend Setup
@@ -201,3 +199,10 @@ This statement creates a table named autobots with fields for ID, name, username
     Open your browser and go to http://localhost:5173 to view the application.
     
 ```
+## **API Documentation**
+The API is documented using `Swagger`:
+
+To view the documentation locally:
+
+Ensure your backend server is running.
+Visit `http://localhost:3000/api-docs` in your browser.
