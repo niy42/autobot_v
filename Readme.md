@@ -34,7 +34,7 @@ Before setting up the project, ensure you have the following installed:
 git clone https://github.com/niy42/autobots_v.git
 cd autobots_v
 
-```markdown
+```sql
 ### Backend Setup
 
 1. **Navigate to the backend directory:**
@@ -62,7 +62,7 @@ cd autobots_v
 
     Start the server by running:
 
-    ```bash
+    ```sql
     npm run dev
     ```
 ```
@@ -74,8 +74,9 @@ To set up the `autobots` database in MySQL, follow these steps:
 
 Use the MySQL Command Line Interface (CLI) to create the database. Open your terminal or command prompt and enter the following command:
 
+```sql
 CREATE DATABASE autobots;
-
+```
 This command initializes a new database named autobots. Ensure you have the necessary privileges to create databases.
 
 ### 2. Configure Database Connection
@@ -129,8 +130,7 @@ CREATE TABLE autobots (
 ```
 This statement creates a table named autobots with fields for ID, name, username, email, and timestamps for record creation and updates.
 
-```markdown
-###
+```sql
 
 ### Frontend Setup
 
@@ -154,6 +154,5 @@ This statement creates a table named autobots with fields for ID, name, username
     ```
 
     Open your browser and go to http://localhost:5173 to view the application.
-
     
 ```
