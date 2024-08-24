@@ -30,11 +30,12 @@ Before setting up the project, ensure you have the following installed:
 
 ### Clone the Repository
 
-```bash
-git clone https://github.com/niy42/autobots_v.git
-cd autobots_v
+
+### **git clone `https://github.com/niy42/autobots_v.git` **
+### `cd autobots_v`
 
 ```bash
+
 ### Backend Setup
 
 1. Navigate to the backend directory:
