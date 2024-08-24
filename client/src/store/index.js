@@ -66,7 +66,7 @@ export default createStore({
                 const posts = response.data?.data || [];
                 commit('setPosts', posts);
             } catch (error) {
-                console.error('Full error: ', error); // Detailed error information
+                console.error('Full error: ', error);
                 const errorMessage = error.response?.data || 'Error fetching Posts';
                 if (error.response && error.response?.status === 429) {
                     commit('setErrorMessage', errorMessage);

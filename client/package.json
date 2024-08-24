@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "axios": "^1.7.5",
+    "debounce": "^2.1.0",
+    "lodash": "^4.17.21",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "vue": "^3.4.37",

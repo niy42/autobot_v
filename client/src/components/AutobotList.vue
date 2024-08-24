@@ -23,7 +23,9 @@
 <script setup>
 import { computed, onMounted, reactive } from 'vue';
 import { useStore } from 'vuex';
+import debounce from 'lodash/debounce';
 
+// Set up the store
 const store = useStore();
 
 // State for pagination
@@ -32,6 +34,17 @@ const pagination = reactive({
   limit: 10,
   totalPages: 1,
 });
+
+// Create a debounced version of fetchPosts
+const debouncedFetchPosts = debounce(async (autobotId) => {
+  await store.dispatch('fetchPosts', autobotId);
+}, 3000);
+
+// Define selectAutobot function
+const selectAutobot = (autobot) => {
+  store.commit('setSelectedAutobot', autobot);
+  debouncedFetchPosts(autobot.id);
+};
 
 // Fetch Autobots and update total pages
 const fetchAutobots = async () => {
@@ -49,6 +62,7 @@ const fetchAutobots = async () => {
     console.log(`Total pages: ${pagination.totalPages}`);
   } catch (error) {
     console.error('Dispatch failed:', error);
+    store.commit('setErrorMessage', error.message);
   }
 };
 
@@ -57,11 +71,6 @@ const autobots = computed(() => store.getters.autobots);
 const currentPage = computed(() => pagination.currentPage);
 const totalPages = computed(() => pagination.totalPages);
 const errorMessage = computed(() => store.getters.errorMessage);
-
-const selectAutobot = (autobot) => {
-  store.commit('setSelectedAutobot', autobot);
-  store.dispatch('fetchPosts', autobot.id);
-};
 
 // Fetch autobots on mount
 onMounted(() => {

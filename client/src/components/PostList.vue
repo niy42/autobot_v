@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import debounce from 'lodash/debounce';
 import { computed, watch } from 'vue';
 import { useStore } from 'vuex';
 
@@ -25,6 +26,7 @@ watch(selectedAutobot, (newAutobot) => {
     store.dispatch('fetchPosts', newAutobot.id);
   }
 });
+
 </script>
 
 <style scoped>
