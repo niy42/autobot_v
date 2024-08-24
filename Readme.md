@@ -31,8 +31,8 @@ Before setting up the project, ensure you have the following installed:
 ### Clone the Repository
 
 
-# git clone `https://github.com/niy42/autobots_v.git` 
-# cd `autobots_v`
+git clone `https://github.com/niy42/autobots_v.git` 
+cd `autobots_v`
 
 ```bash
 
