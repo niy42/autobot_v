@@ -43,12 +43,12 @@ export default createStore({
                 const response = await axios.get('http://localhost:3000/api/autobots', {
                     params: { page, limit }
                 });
-                const autobots = response.data.data || [];
-                const totalItems = response.data.totalItems || 0;
+                const autobots = response.data?.data || [];
+                const totalItems = response.data?.totalItems || 0;
                 commit('setAutobots', autobots);
                 commit('setTotalAutobots', totalItems);
             } catch (error) {
-                const errorMessage = error.response?.data?.message || 'Error fetching Autobots';
+                const errorMessage = error.response?.data || 'Error fetching Autobots';
                 if (error.response && error.response.status === 429) {
                     commit('setErrorMessage', errorMessage);
                     setTimeout(() => commit('setErrorMessage', null), 5000);
@@ -60,15 +60,19 @@ export default createStore({
         },
         async fetchPosts({ commit }, autobotId) {
             try {
+                console.log(`Fetching posts for autobotId: ${autobotId}`);  // Debugging line
                 const response = await axios.get(`http://localhost:3000/api/autobots/${autobotId}/posts`);
-                commit('setPosts', response.data.data || response.data);
+                console.log('Response:', response);
+                const posts = response.data?.data || [];
+                commit('setPosts', posts);
             } catch (error) {
-                const errorMessage = error.response?.data?.message || 'Error fetching Posts';
-                if (error.response && error.response.status === 429) {
+                console.error('Full error: ', error); // Detailed error information
+                const errorMessage = error.response?.data || 'Error fetching Posts';
+                if (error.response && error.response?.status === 429) {
                     commit('setErrorMessage', errorMessage);
                     setTimeout(() => commit('setErrorMessage', null), 5000);
                 } else {
-                    console.error('Error fetching Posts:', error);
+                    console.error('Error fetching Posts:', error.message);
                     commit('setErrorMessage', errorMessage);
                 }
             }
@@ -78,7 +82,7 @@ export default createStore({
                 const response = await axios.get(`http://localhost:3000/api/posts/${postId}/comments`);
                 commit('setComments', response.data.data || response.data);
             } catch (error) {
-                const errorMessage = error.response?.data?.message || 'Error fetching Comments';
+                const errorMessage = error.response?.data || 'Error fetching Comments';
                 if (error.response && error.response.status === 429) {
                     commit('setErrorMessage', errorMessage);
                     setTimeout(() => commit('setErrorMessage', null), 5000);
