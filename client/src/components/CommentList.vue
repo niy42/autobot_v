@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-list">
+  <div class="comment-list-container">
     <h2 class="title">Comment List</h2>
     <ul class="comment-items">
       <li v-for="comment in comments" :key="comment.id" class="comment-item">
@@ -30,7 +30,7 @@ watch(selectedPost, (newPost) => {
 </script>
 
 <style scoped>
-.comment-list {
+.comment-list-container {
   padding: 20px;
   background: #1e1e1e; /* Dark background to match the app's theme */
   border-radius: 15px;
@@ -67,5 +67,14 @@ watch(selectedPost, (newPost) => {
 .comment-item:hover {
   background-color: #3c3c3c; /* Slightly lighter color on hover */
   transform: translateY(-2px); /* Subtle lift effect on hover */
+}
+
+@media (max-width: 600px) {
+  .comment-list-container {
+    max-width: 100%; /* Allow container to be full width on small screens */
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="post-list">
+  <div class="post-list-container">
     <h2 class="title">Post List</h2>
     <ul class="post-items">
       <li v-for="post in posts" :key="post.id" class="post-item">
@@ -30,7 +30,7 @@ watch(selectedAutobot, (newAutobot) => {
 </script>
 
 <style scoped>
-.post-list {
+.post-list-container {
   padding: 20px;
   background: #1e1e1e; /* Dark background to match the app's theme */
   border-radius: 15px;
@@ -68,5 +68,14 @@ watch(selectedAutobot, (newAutobot) => {
 .post-item:hover {
   background-color: #3c3c3c; /* Slightly lighter color on hover */
   transform: translateY(-2px); /* Subtle lift effect on hover */
+}
+
+@media (max-width: 600px) {
+  .post-list-container {
+    max-width: 100%; /* Allow container to be full width on small screens */
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

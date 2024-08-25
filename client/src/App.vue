@@ -59,6 +59,7 @@ function handleSelectAutobot(autobot) {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 60px;
   }
 </style>

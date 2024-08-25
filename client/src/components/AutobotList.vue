@@ -38,7 +38,7 @@ const pagination = reactive({
 // Create a debounced version of fetchPosts
 const debouncedFetchPosts = debounce(async (autobotId) => {
   await store.dispatch('fetchPosts', autobotId);
-}, 3000);
+}, 1000);
 
 // Define selectAutobot function
 const selectAutobot = (autobot) => {
@@ -177,6 +177,8 @@ const previousPage = () => {
   .autobot-list-container {
     max-width: 100%; /* Allow container to be full width on small screens */
     padding: 15px;
+    justify-content: center;
+    align-items: center;
   }
 
   .autobot-list-title {
