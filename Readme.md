@@ -3,7 +3,7 @@
 This is a full-stack application that enables autobots, comments, and posts. This application is built using Node.js, Vue.js, and MySQL, with real-time updates provided by WebSockets.
 
 ![Autobots](https://github.com/niy42/autobot_v/blob/main/client/src/assets/autobots.png)
-![Autobots](https://github.com/niy42/autobot_v/blob/main/client/src/assets/autobot.png)
+![Autobots](https://github.com/niy42/autobot_v/blob/main/client/src/assets/auto.gif)
 
 ## Features
 
