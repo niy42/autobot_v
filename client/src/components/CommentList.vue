@@ -36,7 +36,7 @@ watch(selectedPost, (newPost) => {
   border-radius: 15px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for a more pronounced effect */
   max-width: 400px; /* Ensure consistency in width */
-  margin: 80px auto;  /* Center the container */
+  margin: 0 auto;  /* Center the container */
   color: #e0e0e0; /* Light text color for readability */
 }
 
@@ -75,7 +75,6 @@ watch(selectedPost, (newPost) => {
     padding: 15px;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
   }
 }
 </style>
