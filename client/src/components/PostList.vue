@@ -2,9 +2,10 @@
   <div class="post-list-container">
     <h2 class="title">Post List</h2>
     <ul class="post-items">
-      <li v-for="post in posts" :key="post.id" class="post-item">
+      <li v-for="post in posts" :key="post.id" class="post-item" :style="{  position: 'relative' }">
         <h3 class="post-title">{{ post.title }}</h3>
         <p class="post-body">{{ post.body }}</p>
+        <p class="post-createdAt">Created at: {{ post.createdAt }}</p>
       </li>
     </ul>
   </div>
@@ -83,6 +84,14 @@ watch(selectedAutobot, (newAutobot) => {
   color: #e0e0e0;
   font-size: 16px;
   line-height: 1.5;
+}
+
+.post-createdAt {
+  position: absolute;
+  left: 6px;
+  color: #e0e6af;
+  font-size: 10px;
+  bottom: 1px;
 }
 
 @media (max-width: 600px) {
