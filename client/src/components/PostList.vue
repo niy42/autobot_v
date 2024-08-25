@@ -3,7 +3,8 @@
     <h2 class="title">Post List</h2>
     <ul class="post-items">
       <li v-for="post in posts" :key="post.id" class="post-item">
-        {{ post.title }}
+        <h3 class="post-title">{{ post.title }}</h3>
+        <p class="post-body">{{ post.body }}</p>
       </li>
     </ul>
   </div>
@@ -32,17 +33,17 @@ watch(selectedAutobot, (newAutobot) => {
 <style scoped>
 .post-list-container {
   padding: 20px;
-  background: #1e1e1e; /* Dark background to match the app's theme */
+  background: #1e1e1e;
   border-radius: 15px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for consistency */
-  max-width: 400px; /* Ensure consistency in width */
-  margin: 0 auto;  /* Center the container */
-  margin-bottom: 20px; /* Add margin-bottom to separate from CommentList */
-  color: #e0e0e0; /* Light text color for readability */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  color: #e0e0e0;
 }
 
 .title {
-  color: #e0e0e0; /* Light text color to match the dark theme */
+  color: #e0e0e0;
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
@@ -57,22 +58,36 @@ watch(selectedAutobot, (newAutobot) => {
 }
 
 .post-item {
-  padding: 15px; /* Adjust padding for better spacing */
+  padding: 15px;
   margin-bottom: 10px;
-  border-radius: 10px; /* Match with other components */
-  background-color: #2c2c2c; /* Dark background for individual items */
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  border-radius: 10px;
+  background-color: #2c2c2c;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .post-item:hover {
-  background-color: #3c3c3c; /* Slightly lighter color on hover */
-  transform: translateY(-2px); /* Subtle lift effect on hover */
+  background-color: #3c3c3c;
+  transform: translateY(-2px);
+}
+
+.post-title {
+  font-size: 20px;
+  color: #ff79c6; /* Pink color to match the preferred style */
+  margin-bottom: 10px;
+  text-transform: capitalize; /* Capitalize each word in the title */
+  letter-spacing: 1px;
+}
+
+.post-body {
+  color: #e0e0e0;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 @media (max-width: 600px) {
   .post-list-container {
-    max-width: 100%; /* Allow container to be full width on small screens */
+    max-width: 100%;
     padding: 15px;
     justify-content: center;
     align-items: center;
