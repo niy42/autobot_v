@@ -73,9 +73,9 @@ watch(selectedAutobot, (newAutobot) => {
 
 .post-title {
   font-size: 20px;
-  color: #ff79c6; /* Pink color to match the preferred style */
+  color: #ff79c6; 
   margin-bottom: 10px;
-  text-transform: capitalize; /* Capitalize each word in the title */
+  text-transform: capitalize;
   letter-spacing: 1px;
 }
 
