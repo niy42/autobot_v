@@ -1,27 +1,55 @@
 <template>
-  <div class="autobot-list-container">
-    <h2 class="autobot-list-title">Autobot List</h2>
-    <!-- Error Message Display -->
-    <div v-if="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-    <ul class="autobot-list">
-      <li v-for="autobot in autobots" :key="autobot.id" @click="selectAutobot(autobot)" class="autobot-item">
-        <button class="autobot-button">{{ autobot.name }}</button>
-      </li>
-    </ul>
+  <div class="autobot-post-container">
+    <!-- Flex container for Autobot List and Post List -->
+    <div class="content-wrapper">
+      <!-- Autobot List Section -->
+      <div class="autobot-list-container">
+        <h2 class="autobot-list-title">Autobot List</h2>
+        <!-- Error Message Display -->
+        <div v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+        <ul class="autobot-list">
+          <li v-for="autobot in autobots" :key="autobot.id" @click="selectAutobot(autobot)" class="autobot-item">
+            <button class="autobot-button">{{ autobot.name }}</button>
+          </li>
+        </ul>
 
-    <!-- Pagination Controls -->
-    <div class="pagination">
-      <button @click="previousPage" :disabled="currentPage === 1">Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+        <!-- Pagination Controls -->
+        <div class="pagination">
+          <button @click="previousPage" :disabled="currentPage === 1">Previous</button>
+          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+          <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+        </div>
+      </div>
+
+      <!-- Post List Section -->
+      <div class="post-list-container" v-if="selectedAutobot">
+        <h2 class="title">Posts for {{ selectedAutobot.name }}</h2>
+        <ul class="post-items">
+          <li v-for="post in posts" :key="post.id" class="post-item" @click="selectPost(post)">
+            <h3 class="post-title">{{ post.title }}</h3>
+            <p class="post-body">{{ post.body }}</p>
+            <p class="post-createdAt">Created at: {{ post.createdAt }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Comment List Section -->
+    <div class="comment-list-container" v-if="selectedPost">
+      <h2 class="title">Comments for {{ selectedPost.title }}</h2>
+      <ul class="comment-items">
+        <li v-for="comment in comments" :key="comment.id" class="comment-item">
+          {{ comment.body }}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, reactive } from 'vue';
+import { computed, onMounted, reactive, watch } from 'vue';
 import { useStore } from 'vuex';
 import debounce from 'lodash/debounce';
 
@@ -40,16 +68,26 @@ const debouncedFetchPosts = debounce(async (autobotId) => {
   await store.dispatch('fetchPosts', autobotId);
 }, 1000);
 
+// Create a debounced version of fetchComments
+const debouncedFetchComments = debounce(async (postId) => {
+  await store.dispatch('fetchComments', postId);
+}, 1000);
+
 // Define selectAutobot function
 const selectAutobot = (autobot) => {
   store.commit('setSelectedAutobot', autobot);
   debouncedFetchPosts(autobot.id);
 };
 
+// Define selectPost function
+const selectPost = (post) => {
+  store.commit('setSelectedPost', post);
+  debouncedFetchComments(post.id);
+};
+
 // Fetch Autobots and update total pages
 const fetchAutobots = async () => {
   store.commit('setErrorMessage', null); // Clear previous error message
-  console.log(`Fetching page ${pagination.currentPage} with limit ${pagination.limit}`);
   try {
     await store.dispatch('fetchAutobots', {
       page: pagination.currentPage,
@@ -59,9 +97,7 @@ const fetchAutobots = async () => {
     // Update pagination total pages
     const totalItems = store.getters.totalAutobots; // Make sure this getter is returning the correct value
     pagination.totalPages = totalItems ? Math.ceil(totalItems / pagination.limit) : 1;
-    console.log(`Total pages: ${pagination.totalPages}`);
   } catch (error) {
-    console.error('Dispatch failed:', error);
     store.commit('setErrorMessage', error.message);
   }
 };
@@ -71,6 +107,17 @@ const autobots = computed(() => store.getters.autobots);
 const currentPage = computed(() => pagination.currentPage);
 const totalPages = computed(() => pagination.totalPages);
 const errorMessage = computed(() => store.getters.errorMessage);
+const selectedAutobot = computed(() => store.getters.selectedAutobot);
+const selectedPost = computed(() => store.getters.selectedPost);
+const posts = computed(() => store.getters.posts);
+const comments = computed(() => store.getters.comments);
+
+// Watch for changes in the selectedPost and fetch comments accordingly
+watch(selectedPost, (newPost) => {
+  if (newPost) {
+    debouncedFetchComments(newPost.id);
+  }
+});
 
 // Fetch autobots on mount
 onMounted(() => {
@@ -94,21 +141,50 @@ const previousPage = () => {
 </script>
 
 <style scoped>
-.autobot-list-container {
+.autobot-post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 20px;
-  background-color: #1e1e1e; /* Dark background to match the app's theme */
-  border-radius: 15px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for consistency */
-  max-width: 400px; /* Ensure a consistent maximum width */
-  width: 100%; /* Ensure the container takes up full width */
-  margin: 0 auto; /* Center the container horizontally */
-  margin-bottom: 20px; /* Add margin-bottom to separate from PostList */
-  color: #e0e0e0; /* Light text color for readability */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  background-color: #1e1e1e;
+  color: #e0e0e0;
 }
 
-.autobot-list-title {
-  color: #e0e0e0; /* Light text color to match the dark theme */
+.content-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start; /* Align items to the top */
+}
+
+.autobot-list-container, .post-list-container, .comment-list-container {
+  padding: 20px;
+  background: #2c2c2c;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.autobot-list-container {
+  width: 300px; /* Set a fixed width for the Autobot list */
+  max-height: 80vh; /* Adjust height to fit within the viewport, with some margin */
+  overflow-y:auto; /* Add scroll if content exceeds height */
+}
+
+.post-list-container {
+  flex: 1; /* Allow the post list to take remaining space */
+  max-height: 80vh; /* Adjust height to fit within the viewport, with some margin */
+  overflow-y: auto; /* Add scroll if content exceeds height */
+}
+
+.comment-list-container {
+  padding: 20px;
+  background: #2c2c2c;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.autobot-list-title, .title {
+  color: #e0e0e0;
   font-size: 24px;
   margin-bottom: 15px;
   text-align: center;
@@ -116,13 +192,13 @@ const previousPage = () => {
   letter-spacing: 1.5px;
 }
 
-.autobot-list {
-  list-style-type: none;
+.autobot-list, .post-items, .comment-items {
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.autobot-item {
+.autobot-item, .post-item, .comment-item {
   margin-bottom: 10px;
 }
 
@@ -148,23 +224,70 @@ const previousPage = () => {
   transform: scale(1);
 }
 
+.post-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #2c2c2c;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.post-item:hover {
+  background-color: #3c3c3c;
+  transform: translateY(-2px);
+}
+
+.post-title {
+  font-size: 20px;
+  color: #ff79c6;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.post-body {
+  color: #e0e0e0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.post-createdAt {
+  color: #e0e6af;
+  font-size: 12px;
+}
+
+.comment-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #2c2c2c;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.comment-item:hover {
+  background-color: #3c3c3c;
+  transform: translateY(-2px);
+}
+
 .pagination {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; /* Allow pagination buttons to wrap on small screens */
+  flex-wrap: wrap;
   margin-top: 10px;
 }
 
 .pagination button {
   margin: 5px;
-  padding: 8px 12px; /* Increase padding for better touch targets */
+  padding: 8px 12px;
   border-radius: 4px;
   background-color: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 16px; /* Adjust font size for better readability */
+  font-size: 16px;
 }
 
 .pagination button:disabled {
@@ -173,17 +296,20 @@ const previousPage = () => {
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
-  .autobot-list-container {
-    max-width: 100%; /* Allow container to be full width on small screens */
-    padding: 15px;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 800px) {
+  .content-wrapper {
+    flex-direction: column;
   }
 
-  .autobot-list-title {
-    font-size: 20px;
-    margin-bottom: 10px;
+  .autobot-list-container {
+    width: 100%; /* Make Autobot list full width on smaller screens */
+    max-height: none; /* Remove height restriction on small screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .autobot-post-container {
+    padding: 15px;
   }
 
   .autobot-button {
@@ -192,21 +318,20 @@ const previousPage = () => {
   }
 
   .pagination {
-    flex-direction: column; /* Stack pagination buttons vertically on smaller screens */
+    flex-direction: column;
   }
 
   .pagination button {
-    width: 100%; /* Make pagination buttons full width on small screens */
-    margin: 5px 0; /* Adjust margin for vertical stacking */
-    padding: 10px; /* Increase padding for better touch targets */
-    font-size: 18px; /* Increase font size for better readability */
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 18px;
   }
 }
 
 @media (max-width: 400px) {
-  .autobot-list-title {
+  .autobot-list-title, .title {
     font-size: 18px;
-    margin-bottom: 8px;
   }
 
   .autobot-button {
@@ -215,17 +340,8 @@ const previousPage = () => {
   }
 
   .pagination button {
-    font-size: 16px; /* Adjust font size for small screens */
-    padding: 8px; /* Adjust padding for small screens */
-  }
-
-  .error-message {
-    color: red;
-    background-color: #f8d7da;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    text-align: center;
+    font-size: 16px;
+    padding: 8px;
   }
 }
 </style>

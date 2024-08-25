@@ -2,8 +2,8 @@
   <div id="app">
     <AutobotCounter />
     <AutobotList @selectAutobot="handleSelectAutobot" />
-    <PostList :posts="posts" />
-    <CommentList :comments="comments" />
+    <!--<PostList :posts="posts" />
+    <CommentList :comments="comments" />-->
   </div>
 </template>
 
