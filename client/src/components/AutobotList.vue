@@ -216,8 +216,8 @@ const previousPage = () => {
   width: 100%;
   padding: 10px;
   font-size: 18px;
-  color: white;
-  background-color: #4CAF50;
+  color: #e0e0e0; /* Ensure text contrasts well with the background */
+  background-color: #2c3e50; /* Midnight Blue background color */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -225,12 +225,12 @@ const previousPage = () => {
 }
 
 .autobot-button:hover {
-  background-color: #45a049;
+  background-color: #34495e; /* Slightly lighter Midnight Blue for hover effect */
   transform: scale(1.05);
 }
 
 .autobot-button:active {
-  background-color: #3e8e41;
+  background-color: #1b2a41; /* Even darker for active state */
   transform: scale(1);
 }
 
@@ -281,7 +281,7 @@ const previousPage = () => {
   transform: translateY(-2px);
 }
 
-.pagination {
+/*.pagination {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -302,6 +302,34 @@ const previousPage = () => {
 
 .pagination button:disabled {
   background-color: #ccc;
+  cursor: not-allowed;
+}*/
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.pagination button {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #4682b4; /* Steel Blue background color */
+  color: #e0e0e0; /* Light color for text to ensure readability */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 16px;
+}
+
+.pagination button:hover {
+  background-color: #5a9bd4; /* Slightly lighter blue for hover effect */
+}
+
+.pagination button:disabled {
+  background-color: #b0b0b0; /* Soft Gray for disabled state */
   cursor: not-allowed;
 }
 
