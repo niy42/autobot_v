@@ -338,6 +338,8 @@ const previousPage = () => {
 @media (max-width: 800px) {
   .content-wrapper {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .autobot-list-container {
