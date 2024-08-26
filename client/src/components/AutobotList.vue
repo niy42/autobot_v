@@ -3,7 +3,7 @@
     <!-- Flex container for Autobot List and Post List -->
     <div class="content-wrapper">
       <!-- Autobot List Section -->
-      <div class="autobot-list-container">
+      <div class="autobot-list-container hide-scrollbar">
         <h2 class="autobot-list-title">Autobot List</h2>
         <!-- Error Message Display -->
         <div v-if="errorMessage" class="error-message">
@@ -24,7 +24,7 @@
       </div>
 
       <!-- Post List Section -->
-      <div class="post-list-container" v-if="selectedAutobot">
+      <div class="post-list-container hide-scrollbar" v-if="selectedAutobot">
         <h2 class="title">Posts for {{ selectedAutobot.name }}</h2>
         <ul class="post-items">
           <li v-for="post in posts" :key="post.id" class="post-item" @click="selectPost(post)">
@@ -167,13 +167,19 @@ const previousPage = () => {
 .autobot-list-container {
   width: 300px; /* Set a fixed width for the Autobot list */
   max-height: 80vh; /* Adjust height to fit within the viewport, with some margin */
-  overflow-y:auto; /* Add scroll if content exceeds height */
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
 }
 
 .post-list-container {
   flex: 1; /* Allow the post list to take remaining space */
   max-height: 80vh; /* Adjust height to fit within the viewport, with some margin */
-  overflow-y: auto; /* Add scroll if content exceeds height */
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
 }
 
 .comment-list-container {
@@ -181,6 +187,10 @@ const previousPage = () => {
   background: #2c2c2c;
   border-radius: 15px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
 }
 
 .autobot-list-title, .title {
@@ -343,5 +353,26 @@ const previousPage = () => {
     font-size: 16px;
     padding: 8px;
   }
+  
+  .hide-scrollbar {
+    overflow: auto; /* Ensure the element is scrollable */
+  }
+
+  /* Hide scrollbar for Chrome, Safari, and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for Internet Explorer, Edge, and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Smooth scrolling */
+  .hide-scrollbar {
+    -webkit-overflow-scrolling: touch;
+  }
+
 }
 </style>
