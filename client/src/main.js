@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import store from './store';
 import io from 'socket.io-client';
+import './globals.css';
 
 const app = createApp(App);
 
