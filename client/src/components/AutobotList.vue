@@ -31,22 +31,23 @@
             <h3 class="post-title">{{ post.title }}</h3>
             <p class="post-body">{{ post.body }}</p>
             <p class="post-createdAt">Created at: {{ post.createdAt }}</p>
+
+            <!-- Comment List Section inside the post -->
+            <div class="comment-list-container hide-scrollbar" v-if="selectedPost && selectedPost.id === post.id">
+              <h2 class="title">Comments for {{ selectedPost.title }}</h2>
+              <ul class="comment-items">
+                <li v-for="comment in comments" :key="comment.id" class="comment-item">
+                  {{ comment.body }}
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
     </div>
-
-    <!-- Comment List Section -->
-    <div class="comment-list-container" v-if="selectedPost">
-      <h2 class="title">Comments for {{ selectedPost.title }}</h2>
-      <ul class="comment-items">
-        <li v-for="comment in comments" :key="comment.id" class="comment-item">
-          {{ comment.body }}
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
+
 
 <script setup>
 import { computed, onMounted, reactive, watch } from 'vue';
@@ -183,10 +184,10 @@ const previousPage = () => {
 }
 
 .comment-list-container {
-  padding: 20px;
+  padding: 10px;
   background: #2c2c2c;
-  border-radius: 15px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
