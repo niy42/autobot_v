@@ -8,7 +8,7 @@ import './globals.css';
 const app = createApp(App);
 
 // Create and configure the socket instance
-const socket = io('http://localhost:3000'); // Replace with your server URL
+const socket = io('http://localhost:3000');
 
 // Set up socket connection and listeners
 socket.on('autobotCountUpdate', (count) => {
