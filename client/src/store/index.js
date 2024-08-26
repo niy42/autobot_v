@@ -7,6 +7,7 @@ export default createStore({
         autobotCount: 0,
         autobots: [],
         selectedAutobot: null,
+        selectedPost: null,
         posts: [],
         comments: [],
         errorMessage: null
@@ -23,6 +24,9 @@ export default createStore({
         },
         setSelectedAutobot(state, autobot) {
             state.selectedAutobot = autobot;
+        },
+        setSelectedPost(state, post) {
+            state.selectedPost = post
         },
         setPosts(state, posts) {
             state.posts = posts;
@@ -96,6 +100,7 @@ export default createStore({
     getters: {
         autobots: state => state.autobots,
         selectedAutobot: state => state.selectedAutobot,
+        selectedPost: state => state.selectedPost,
         posts: state => state.posts,
         comments: state => state.comments,
         autobotCount: state => state.autobotCount,
